@@ -30,7 +30,7 @@ The original clothing should remain, but a "LOWIQ" badge must be visibly attache
 Use a cartoonish, hand-drawn illustration look, with shaky lines, no shading, and flat pastel or garish colors.
 Only modify the face and clothing label; background and pose must stay unchanged. 512x512 size.
 """, 
-        size="512x512",
+        size="1024x1024",
         response_format="url",
         n=1
     )
