@@ -16,22 +16,17 @@ app.add_middleware(
 
 @app.post("/generate")
 async def generate_image(file: UploadFile = File(...)):
-    with open("input.png", "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    try:
+        with open("input.png", "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
 
-    response = openai.images.generate(
-        model="dall-e-3",
-        prompt="""Transform only the face and head of the subject in the image into a ‘LowIQ’ meme-style character.
-Give them an oversized, slightly deformed bald head, asymmetrical and awkwardly shaped.
-The eyes must have no focus — pointing in different directions with large visible white space.
-Keep the mouth open at all times, with a silly drooling expression. Blue saliva should drip down.
-Maintain the original skin tone of the subject exactly as in the original image.
-The original clothing should remain, but a "LOWIQ" badge must be visibly attached and rendered in the same distorted style.
-Use a cartoonish, hand-drawn illustration look, with shaky lines, no shading, and flat pastel or garish colors.
-Only modify the face and clothing label; background and pose must stay unchanged. 512x512 size.
-""", 
-        size="1024x1024",
-        response_format="url",
-        n=1
-    )
-    return { "image_url": response['data'][0]['url'] }
+        response = openai.images.generate(
+            model="dall-e-3",
+            prompt="Generate a cartoon character with a silly face",  # 테스트용 간단 프롬프트
+            size="1024x1024",
+            response_format="url",
+            n=1
+        )
+        return { "image_url": response['data'][0]['url'] }
+    except Exception as e:
+        return { "error": str(e) }
